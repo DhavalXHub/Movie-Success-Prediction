@@ -237,6 +237,23 @@ if predict_button:
         
         st.markdown(result_html, unsafe_allow_html=True)
         
+        # Smoothly scroll down to results after prediction
+        st.components.v1.html(
+            """
+            <script>
+                setTimeout(function() {
+                    const mainDiv = window.parent.document.querySelector('.main');
+                    if (mainDiv) {
+                        mainDiv.scrollTo({top: mainDiv.scrollHeight, behavior: 'smooth'});
+                    } else {
+                        window.parent.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+                    }
+                }, 300);
+            </script>
+            """,
+            height=0,
+        )
+
         # Probability metrics
         st.markdown("### Prediction Probabilities")
         prob_hit = prediction_proba[1] * 100
@@ -288,3 +305,5 @@ st.markdown("""
     <p style='font-size: 12px;'>This model excludes post-release features like ratings or votes to avoid data leakage.</p>
 </div>
 """, unsafe_allow_html=True)
+
+
